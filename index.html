@@ -88,19 +88,19 @@
           </div>
         </div>
 
-        <!-- Sensor Control Card -->
+        <!-- Full Sensor Control Card -->
         <div class="col-12 col-md-6 col-xl-4 mt-2">
           <div class="card h-100">
-            <div class="card-body h-100 flex-column d-flex">
+            <div class="card-body h-100 d-flex flex-column">
               <div class="d-flex flex-row w-100 justify-content-between">
                 <h5 class="card-title">Sensor Control</h5>
               </div>
-              <div class="d-flex flex-column flex-fill justify-content-between">
+              <div
+                class="d-flex flex-column flex-fill justify-content-between mt-2"
+              >
                 <p class="card-text">
                   Select sensors and sampling rate to capture.
                 </p>
-
-                <!-- Grid Layout Starts Here -->
                 <div
                   style="
                     display: grid;
@@ -109,15 +109,13 @@
                     align-items: center;
                   "
                 >
-                  <!-- IMU Row -->
-                  <div>
-                    <input
-                      type="checkbox"
-                      disabled
-                      class="is-connect-enabled"
-                      id="areSensorsEnabled"
-                    />
-                  </div>
+                  <!-- Accelerometer/Gyro/Magnetometer -->
+                  <input
+                    type="checkbox"
+                    disabled
+                    class="is-connect-enabled"
+                    id="areSensorsEnabled"
+                  />
                   <div
                     class="ms-2"
                     style="
@@ -128,41 +126,123 @@
                   >
                     Accelerometer, Gyroscope, Magnetometer (via BLE)
                   </div>
-                  <div>
-                    <select
-                      disabled
-                      class="w-100 is-connect-enabled ms-1 sampling-rate-input form-select"
-                      id="sensorSamplingRate"
-                    >
-                      <option value="0">0</option>
-                      <option value="10">10</option>
-                      <option value="20">20</option>
-                      <option value="30">30</option>
-                      <option value="40">40</option>
-                      <option value="50">50</option>
-                    </select>
+                  <select
+                    disabled
+                    class="form-select sampling-rate-input is-connect-enabled"
+                    id="sensorSamplingRate"
+                  >
+                    <option value="0">0</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                  </select>
+                  <div>Hz</div>
+                  <!-- Pressure/Temperature -->
+                  <input
+                    type="checkbox"
+                    disabled
+                    class="is-connect-enabled"
+                    id="isPressureSensorEnabled"
+                  />
+                  <div
+                    class="ms-2"
+                    style="
+                      overflow: hidden;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    Pressure Sensor, Temperature Sensor (via BLE)
                   </div>
-                  <div class="ms-1">Hz</div>
+                  <select
+                    disabled
+                    class="form-select sampling-rate-input is-connect-enabled"
+                    id="pressureSensorSamplingRate"
+                  >
+                    <option value="0">0</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                  </select>
+                  <div>Hz</div>
+                  <!-- Microphone -->
+                  <input
+                    type="checkbox"
+                    disabled
+                    class="is-connect-enabled"
+                    id="isMicEnabled"
+                  />
+                  <div
+                    class="ms-2"
+                    style="
+                      overflow: hidden;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    Microphone (recorded to microSD card)
+                  </div>
+                  <select
+                    disabled
+                    class="form-select sampling-rate-input is-connect-enabled"
+                    id="microphoneSamplingRate"
+                  >
+                    <option value="0">0</option>
+                    <option value="16000">16,000</option>
+                    <option value="41667">41,667</option>
+                    <option value="62500">62,500</option>
+                  </select>
+                  <div>Hz</div>
+                  <!-- Inner Mic Gain -->
+                  <span></span>
+                  <input
+                    type="checkbox"
+                    disabled
+                    class="is-connect-enabled ms-3"
+                    id="innerMicrophoneEnabled"
+                  />
+                  <div>Inner</div>
+                  <select
+                    disabled
+                    class="form-select sampling-rate-input is-connect-enabled"
+                    id="microphoneGainInner"
+                  ></select>
+                  <div>dB</div>
+                  <!-- Outer Mic Gain -->
+                  <span></span>
+                  <input
+                    type="checkbox"
+                    disabled
+                    class="is-connect-enabled ms-3"
+                    id="outerMicrophoneEnabled"
+                  />
+                  <div>Outer</div>
+                  <select
+                    disabled
+                    class="form-select sampling-rate-input is-connect-enabled"
+                    id="microphoneGainOuter"
+                  ></select>
+                  <div>dB</div>
                 </div>
-                <!-- Grid Layout Ends Here -->
-
                 <div class="d-flex flex-row mt-3 w-100 justify-content-between">
                   <button
                     id="setSensorConfigurationButton"
-                    class="btn btn-control is-connect-enabled flex-fill"
+                    class="btn btn-control flex-fill is-connect-enabled"
                     disabled
                   >
                     Set Configuration
                   </button>
                   <button
                     id="testOcclusionButton"
-                    class="btn btn-control is-connect-enabled ms-3"
+                    class="btn btn-control ms-3 is-connect-enabled"
                     disabled
                     style="min-width: 120px"
                   >
                     Test Occl.
                   </button>
-                  <button class="btn btn-stop is-connect-enabled ms-3" disabled>
+                  <button class="btn btn-stop ms-3 is-connect-enabled" disabled>
                     Off
                   </button>
                 </div>
@@ -172,7 +252,7 @@
         </div>
       </div>
       <div class="row gx-2 mt-2">
-        <!-- Accelerometer -->
+        <!-- Accelerometer Chart -->
         <div class="col-12 col-md-6 col-xl-4">
           <div class="card">
             <div class="card-body">
@@ -183,7 +263,7 @@
             </div>
           </div>
         </div>
-        <!-- Gyroscope -->
+        <!-- Gyroscope Chart -->
         <div class="col-12 col-md-6 col-xl-4">
           <div class="card">
             <div class="card-body">
@@ -194,8 +274,8 @@
             </div>
           </div>
         </div>
-        <!-- Magnetometer -->
-        <div class="col-12 col-md-6 col-xl-4">
+        <!-- Magnetometer Chart -->
+        <div class="col-12 col-md-6 col-xl=4">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Magnetometer</h5>
@@ -218,17 +298,14 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Core Modules -->
     <script src="./assets/js/OpenEarable.js"></script>
     <script src="./assets/js/ConnectionManager.js"></script>
     <script src="./assets/js/SensorManager.js"></script>
     <script src="./assets/js/ChartManager.js"></script>
-
     <script>
       $(document).ready(function () {
         $("#disconnectDeviceButton").hide();
-        $("#toggleSensorReading").prop("disabled", true);
-
+        $(".is-connect-enabled").prop("disabled", true);
         $("#connectDeviceButton").click(async function () {
           $(this).prop("disabled", true);
           try {
@@ -237,31 +314,44 @@
             $(this).prop("disabled", false);
           }
         });
-
-        $("#disconnectDeviceButton").click(() => {
-          openEarable.bleManager.disconnect();
-        });
-
+        $("#disconnectDeviceButton").click(() =>
+          openEarable.bleManager.disconnect()
+        );
         openEarable.bleManager.subscribeOnConnected(async () => {
           $("#connectDeviceButton").hide();
           $("#disconnectDeviceButton").show().prop("disabled", false);
-          $("#setSensorConfigurationButton").prop("disabled", false);
+          $(".is-connect-enabled").prop("disabled", false);
           $("#connectedDevice").text(openEarable.bleManager.deviceName);
           $("#fwVersion").text(await openEarable.readFirmwareVersion());
           $("#deviceVersion").text(await openEarable.readHardwareVersion());
         });
-
         openEarable.bleManager.subscribeOnDisconnected(() => {
           $("#disconnectDeviceButton").hide();
           $("#connectDeviceButton").show().prop("disabled", false);
-          $("#setSensorConfigurationButton").prop("disabled", true);
+          $(".is-connect-enabled").prop("disabled", true);
         });
-
-        $("#setSensorConfigurationButton").click(async function () {
+        $("#setSensorConfigurationButton").click(async () => {
+          const mask = $(".is-connect-enabled:checked")
+            .map((i, el) =>
+              el.id === "areSensorsEnabled"
+                ? 0b111
+                : el.id === "isPressureSensorEnabled"
+                ? 0b1000
+                : el.id === "isMicEnabled"
+                ? 0b1 << 4
+                : 0
+            )
+            .get()
+            .reduce((a, b) => a | b, 0);
           const rate = parseInt($("#sensorSamplingRate").val(), 10);
-          await openEarable.sensorManager.writeSensorConfig(0, rate, 0);
+          const gainInner = parseInt($("#microphoneGainInner").val() || 0, 10);
+          const gainOuter = parseInt($("#microphoneGainOuter").val() || 0, 10);
+          await openEarable.sensorManager.writeSensorConfig(
+            mask,
+            rate,
+            Math.max(gainInner, gainOuter)
+          );
         });
-
         setupCharts();
         openEarable.sensorManager.subscribeOnSensorDataReceived((data) =>
           updateSensorCharts(data)
