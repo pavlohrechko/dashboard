@@ -45,6 +45,9 @@
         color: white;
         border: none;
       }
+      .sampling-rate-input {
+        min-width: 100px;
+      }
       .chartWrapper {
         max-height: 180px;
         height: 100%;
@@ -85,18 +88,85 @@
           </div>
         </div>
 
-        <!-- Sensor Toggle Card -->
+        <!-- Sensor Control Card -->
         <div class="col-12 col-md-6 col-xl-4 mt-2">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Sensor Control</h5>
-              <button
-                id="toggleSensorReading"
-                class="btn btn-control w-100"
-                disabled
-              >
-                Start Reading
-              </button>
+          <div class="card h-100">
+            <div class="card-body h-100 flex-column d-flex">
+              <div class="d-flex flex-row w-100 justify-content-between">
+                <h5 class="card-title">Sensor Control</h5>
+              </div>
+              <div class="d-flex flex-column flex-fill justify-content-between">
+                <p class="card-text">
+                  Select sensors and sampling rate to capture.
+                </p>
+
+                <!-- Grid Layout Starts Here -->
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: auto 1fr auto auto;
+                    gap: 16px;
+                    align-items: center;
+                  "
+                >
+                  <!-- IMU Row -->
+                  <div>
+                    <input
+                      type="checkbox"
+                      disabled
+                      class="is-connect-enabled"
+                      id="areSensorsEnabled"
+                    />
+                  </div>
+                  <div
+                    class="ms-2"
+                    style="
+                      overflow: hidden;
+                      white-space: nowrap;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    Accelerometer, Gyroscope, Magnetometer (via BLE)
+                  </div>
+                  <div>
+                    <select
+                      disabled
+                      class="w-100 is-connect-enabled ms-1 sampling-rate-input form-select"
+                      id="sensorSamplingRate"
+                    >
+                      <option value="0">0</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                      <option value="40">40</option>
+                      <option value="50">50</option>
+                    </select>
+                  </div>
+                  <div class="ms-1">Hz</div>
+                </div>
+                <!-- Grid Layout Ends Here -->
+
+                <div class="d-flex flex-row mt-3 w-100 justify-content-between">
+                  <button
+                    id="setSensorConfigurationButton"
+                    class="btn btn-control is-connect-enabled flex-fill"
+                    disabled
+                  >
+                    Set Configuration
+                  </button>
+                  <button
+                    id="testOcclusionButton"
+                    class="btn btn-control is-connect-enabled ms-3"
+                    disabled
+                    style="min-width: 120px"
+                  >
+                    Test Occl.
+                  </button>
+                  <button class="btn btn-stop is-connect-enabled ms-3" disabled>
+                    Off
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -175,7 +245,7 @@
         openEarable.bleManager.subscribeOnConnected(async () => {
           $("#connectDeviceButton").hide();
           $("#disconnectDeviceButton").show().prop("disabled", false);
-          $("#toggleSensorReading").prop("disabled", false);
+          $("#setSensorConfigurationButton").prop("disabled", false);
           $("#connectedDevice").text(openEarable.bleManager.deviceName);
           $("#fwVersion").text(await openEarable.readFirmwareVersion());
           $("#deviceVersion").text(await openEarable.readHardwareVersion());
@@ -184,20 +254,12 @@
         openEarable.bleManager.subscribeOnDisconnected(() => {
           $("#disconnectDeviceButton").hide();
           $("#connectDeviceButton").show().prop("disabled", false);
-          $("#toggleSensorReading")
-            .prop("disabled", true)
-            .text("Start Reading");
+          $("#setSensorConfigurationButton").prop("disabled", true);
         });
 
-        let reading = false;
-        $("#toggleSensorReading").click(async function () {
-          reading = !reading;
-          $(this).text(reading ? "Stop Reading" : "Start Reading");
-          if (reading) {
-            await openEarable.sensorManager.writeSensorConfig(0, 50, 0);
-          } else {
-            await openEarable.sensorManager.writeSensorConfig(0, 0, 0);
-          }
+        $("#setSensorConfigurationButton").click(async function () {
+          const rate = parseInt($("#sensorSamplingRate").val(), 10);
+          await openEarable.sensorManager.writeSensorConfig(0, rate, 0);
         });
 
         setupCharts();
