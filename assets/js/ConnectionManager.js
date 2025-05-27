@@ -24,9 +24,9 @@ openEarable.bleManager.subscribeOnConnected(async () => {
     $('#fwVersion').text(firmwareVersion);
     $('#deviceVersion').text(hardwareVersion);
 
-    $('#connectedDevice').text(openEarable.bleManager.device.name + "")
+    $('#connectedDevice').text("Mouthguard")
 
-    log("OpenEarable  '" + openEarable.bleManager.device.name + "' connected.", type = "SUCCESS");
+    log("Device  '" + openEarable.bleManager.device.name + "' connected.", type = "SUCCESS");
 });
 
 openEarable.bleManager.subscribeOnDisconnected(() => {
@@ -37,10 +37,10 @@ openEarable.bleManager.subscribeOnDisconnected(() => {
     $('#batteryChargingIndicator').hide();
     $('#batteryChargedIndicator').hide();
 
-    log("OpenEarable disconnected.", type = "WARNING")
+    log("Device disconnected.", type = "WARNING")
 
     // Reset the values to default when disconnected
-    $('#connectedDevice').text("OpenEarable-XXXX");
+    $('#connectedDevice').text("Device-XXXX");
     $('#fwVersion').text("X.X.X");
     $('#deviceVersion').text("X.X.X");
 });
@@ -71,7 +71,7 @@ openEarable.subscribeBatteryStateChanged((batteryState) => {
 
 $('#connectDeviceButton').click(async () => {
     $('#connectDeviceButton').prop('disabled', true);
-    log("Scanning for OpenEarables. Please select.", type = "MESSAGE")
+    log("Scanning for Devices. Please select.", type = "MESSAGE")
     try {
         await openEarable.bleManager.connect();
     } catch (e) {
@@ -83,7 +83,7 @@ $('#connectDeviceButton').click(async () => {
 $('#disconnectDeviceButton').click(() => {
     $(".is-connect-enabled").prop('disabled', true);
     $('#disconnectDeviceButton').prop('disabled', true);
-    log("Disconnecting OpenEarable.", type = "MESSAGE")
+    log("Disconnecting Device.", type = "MESSAGE")
     openEarable.bleManager.disconnect();
 });
 

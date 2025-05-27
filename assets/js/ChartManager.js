@@ -2,8 +2,8 @@ var chartIds = [
     'accelerometerChart',
     'gyroscopeChart',
     'magnetometerChart',
-    'pressureSensorChart',
-    'temperatureSensorChart'
+    // 'pressureSensorChart',
+    // 'temperatureSensorChart'
 ];
 
 // Modern colors for each axis and sensor type
@@ -11,8 +11,8 @@ var colors = {
     'accelerometerChart': ['#FF6347', '#3CB371', '#1E90FF'],  // Tomatillo, Medium Sea Green, Dodger Blue
     'gyroscopeChart': ['#FFD700', '#FF4500', '#D8BFD8'],      // Gold, OrangeRed, Indigo
     'magnetometerChart': ['#F08080', '#98FB98', '#ADD8E6'],   // Light Coral, PaleGreen, Light Blue
-    'pressureSensorChart': ['#32CD32'],                       // LimeGreen
-    'temperatureSensorChart': ['#FFA07A']                      // Light Salmon
+    // 'pressureSensorChart': ['#32CD32'],                       // LimeGreen
+    // 'temperatureSensorChart': ['#FFA07A']                      // Light Salmon
 };
 
 var units = ['m/s\u00B2', '°/s', 'µT', 'Pa', '°C'];
